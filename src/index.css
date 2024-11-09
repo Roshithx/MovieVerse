@@ -1,0 +1,14 @@
+*{
+  font-family: "Poppins", serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+ 
+}
+
+.bg-movies{
+  background: #1d1d1d;
+}
+.bg-move{
+  background: #171717;
+}
