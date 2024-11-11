@@ -8,7 +8,7 @@ const MovieCard = (props) => {
   return (
     <>
       <div>
-                    <Card  className='border-0' style={{ width: '15rem'}}>
+                    <Card   className='border-0' style={{ width: '15rem'}}>
                 <Card.Img variant="top" className='' height={260} src={Poster} />
                 <Card.Body className='mb-0 mt-0'>
                   <p className='fw-semibold text-white'>{Title}</p>

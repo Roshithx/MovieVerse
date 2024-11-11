@@ -19,10 +19,20 @@ const Categories = () => {
         }
     };
 
-    const handleDelete=async(categoryID)=>{
-       await deleteCategory(categoryID)
-       getCategoryCard()
-    }
+    const handleDelete = async (categoryID) => {
+        await deleteCategory(categoryID);
+        getCategoryCard();
+    };
+
+    const videodrop = (e, CID) => {
+        const videoID = e.dataTransfer.getData("vID");
+        console.log(`Video ID ${videoID} dropped in category ${CID}`);
+        e.preventDefault(); // Prevent default behavior
+    };
+
+    const dragCategory = (e) => {
+        e.preventDefault();
+    };
 
     const handleClose = () => {
         setShow(false);
@@ -34,11 +44,10 @@ const Categories = () => {
         if (category) {
             const res = await addCategory({ category, allvideos: [] });
             if (res.status >= 200 && res.status < 300) {
-                
                 toast.success(`${category} Category Added`);
+                handleClose();
+                getCategoryCard();
             }
-            handleClose();
-            getCategoryCard()
         } else {
             toast.warning("Please fill the form");
         }
@@ -46,7 +55,7 @@ const Categories = () => {
 
     return (
         <>
-            <div className='d-flex align-items-center mt-3 '>
+            <div className='d-flex align-items-center mt-3'>
                 <h5 className='text-white'>ADD GENRE</h5>
                 <button onClick={handleShow} className='btn'>
                     <i className="fa-solid fs-4 text-success fa-plus"></i>
@@ -54,34 +63,28 @@ const Categories = () => {
             </div>
 
             <div className="container-fluid mt-3">
-              {
-                categoryCard.length>0?
-                  categoryCard.map((item)=>(
-                    <div className="border rounded p-3 mb-2">
-                    <div className="d-flex justify-content-between align-items-center">
-                        <h5>{item?.category}</h5>
-                        <button onClick={()=>handleDelete(item?.id)} className='btn btn-success'>
-                            Remove<i className="fa-solid fa-trash ms-2"></i>
-                        </button>
-                    </div>
-                    <div>
-                       
-                    </div>
-                </div>
-                  ))
-                :
-                <p className='text-white'>No Data Found</p>
-              }
-                
+                {categoryCard.length > 0 ? (
+                    categoryCard.map((item) => (
+                        <div
+                            key={item?.id}
+                            onDragOver={(e) => dragCategory(e)}
+                            onDrop={(e) => videodrop(e, item.id)}
+                            className="border rounded p-3 mb-2"
+                        >
+                            <div className="d-flex justify-content-between align-items-center">
+                                <h5>{item?.category}</h5>
+                                <button onClick={() => handleDelete(item?.id)} className='btn btn-success'>
+                                    Remove<i className="fa-solid fa-trash ms-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p className='text-white'>No Data Found</p>
+                )}
             </div>
 
-            <Modal
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-                centered
-            >
+            <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Genre</Modal.Title>
                 </Modal.Header>

@@ -24,11 +24,17 @@ const VideoCard = ({ videodetails,setdeletevideoResponse }) => {
      setdeletevideoResponse(res?.data)
   } 
 
+  const videodrag=(e,videoID)=>{
+    console.log(`Dragging${videoID}`);
+    e.dataTransfer.setData("id",videoID)
+    
+  }
+
 
   return (
     <>
       <div className="">
-        <Card style={{ width: "16rem" }}>
+        <Card draggable={true} onDragStart={(e)=>videodrag(e,videodetails?.id)} style={{ width: "16rem" }}>
           <Card.Img
             onClick={handleShow}
             height={200}
