@@ -7,6 +7,7 @@ const Home = () => {
   const [filtermovies, setfiltermovie] = useState([]);
   const [searchmovie, setsearchMovie] = useState("");
 
+
   useEffect(() => {
     MovieAPI();
   }, []);
